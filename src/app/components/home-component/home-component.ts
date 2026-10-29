@@ -11,7 +11,6 @@ import { fileObj } from '../../models/fileObj';
 export class HomeComponent {
 
   @ViewChild("imagen") imagenInput!: ElementRef;
-  @ViewChild("nombre") nombreInput!: ElementRef;
 
   constructor(private _service: imagenService) {}
 
@@ -20,8 +19,9 @@ export class HomeComponent {
     let reader = new FileReader();
     let img64: string;
     reader.addEventListener("load", async () => {
-      img64 = reader.result+"";
-      let imgObj = new fileObj(this.nombreInput.nativeElement.value, img64)
+      img64 = (reader.result+"").split(",")[1];
+      console.log(img64);
+      let imgObj = new fileObj(img.name, img64)
       await this._service.insertImagen(imgObj);
     })
 
